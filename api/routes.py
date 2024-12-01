@@ -45,7 +45,7 @@ def admin():
 @login_required
 def whoop_auth():
 # Get the Whoop app URL from the environment variable
-    whoop_app = f'https://{getenv('WHOOP_APP_URL')}'
+    whoop_app = getenv('WHOOP_APP_URL')
 
     # Prepare login credentials (you may need to get these from your session or database)
     login_data = {
@@ -53,8 +53,8 @@ def whoop_auth():
         'password': current_user.password
     }
 
-    login_url = f'{whoop_app}/login'
-    auth_url = f'{whoop_app}/whoop/auth?user_id={current_user.id}'
+    login_url = f'https://{whoop_app}/login'
+    auth_url = f'https://{whoop_app}/whoop/auth?user_id={current_user.id}'
     
     try:
         # Send the POST request to Whoop to login
