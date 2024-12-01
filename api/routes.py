@@ -13,20 +13,20 @@ def articles():
     return jsonify({"message":"successfully updated article"})
 
 @routes.route('/articles', methods=['GET'])
-def articles():
+def get_articles():
     # Logic to get articles
 
     return jsonify({"message":"successfully retrieved articles"})
 
 @routes.route('/projects', methods=['POST', 'DEL'])
 @login_required
-def articles():
+def projects():
     # Logic to update projects
 
     return jsonify({"message":"successfully updated projects"})
 
 @routes.route('/projects', methods=['GET'])
-def articles():
+def get_projects():
     # Logic to get projects
 
     return jsonify({"message":"successfully retrieved projects"})
