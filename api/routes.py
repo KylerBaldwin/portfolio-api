@@ -45,7 +45,7 @@ def admin():
 @login_required
 def whoop_auth():
 # Get the Whoop app URL from the environment variable
-    whoop_app = getenv('WHOOP_APP_URL')
+    whoop_app = f'https://{getenv('WHOOP_APP_URL')}'
 
     # Prepare login credentials (you may need to get these from your session or database)
     login_data = {
