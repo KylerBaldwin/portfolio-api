@@ -1,7 +1,11 @@
-from flask import Blueprint, render_template, request, flash, jsonify
-from flask_login import login_required, current_user
-from . import db
 import json
+from os import getenv
+import requests as r
+
+from flask import Blueprint, request, jsonify, redirect
+from flask_login import login_required, current_user
+
+from . import db
 
 routes = Blueprint('routes', __name__)
 
@@ -37,12 +41,32 @@ def admin():
 
     return jsonify({"message":"successfully reached admin portal"})
 
-
-@routes.route('/whoop', methods=['GET'])
+@routes.route('/whoop/auth', methods=['GET'])
 @login_required
-def whoop():  
+def whoop_auth():
+# Get the Whoop app URL from the environment variable
+    whoop_app = getenv('WHOOP_APP_URL')
 
-    return jsonify({"message":"successfully reached whoop portal"})
+    # Prepare login credentials (you may need to get these from your session or database)
+    login_data = {
+        'username': current_user.username,
+        'password': current_user.password
+    }
+
+    login_url = f'{whoop_app}/login'
+    auth_url = f'{whoop_app}/whoop/auth?user_id={current_user.id}'
+    
+    try:
+        # Send the POST request to Whoop to login
+        res = r.post(login_url, data=login_data)
+
+        # Check if the login was successful
+        if res.status_code == 200:
+            return redirect(auth_url)
+        else:
+            return jsonify({"message": "Login failed", "error": res.text}), 400
+    except Exception as e:
+        return jsonify({"message": "Error during authentication", "error": str(e)}), 500
 
 @routes.route('/whoop/api', methods=['GET'])
 @login_required
