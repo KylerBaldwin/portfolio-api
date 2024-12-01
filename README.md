@@ -11,6 +11,10 @@ git clone <repo-url>
 ```bash
 pip install -r requirements.txt
 ```
+## Required Environment Variables
+
+DATABASE_URI = SQLAlchemy URI to your Database
+SECRET_KEY = Your secret key for the flask app
 
 ## Running The App
 
